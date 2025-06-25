@@ -1,18 +1,22 @@
+/* Importamos los iconos de Bootsrap */
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
 
+/* Hacemos un CSS Reset de las propiedades que nos interesen. No siempre hay que asignar 0 a los espacios, también podemos poner otros
+valores que veamos más convenientes */
 * {
     margin: 0;
     padding: 0;
-    font-weight: 100%;
-    box-sizing: border-box; /* Para que el padding y borde no sume al ancho */
-    text-decoration: none; /* quitamos todos los subrayados de los enlaces */
-    font-weight: normal;
+    font-weight: 100%; /* Toda la letra del mismo tamaño */
+    box-sizing: border-box; /* Para que el padding y borde no sume al ancho de un elemento*/
+    text-decoration: none; /* Quitamos todos los subrayados de los enlaces */
+    font-weight: normal; /* Quitamos las negritas */
 }
 
+/* Importamos las fuentes a usar */
 @font-face {
-    font-family: homepage;
+    font-family: homepage; /* Un nombre cualquiera que usaremos luego en otras reglas en esta misma propiedad */
     src: url(../fuentes/Homepagebaukasten\ Bold.ttf);
-    /*src:url(/fuentes/Homepagebaukasten\ Bold.ttf);*/
+    /*src:url(/fuentes/Homepagebaukasten\ Bold.ttf); Usando ruta absoluta*/
 }
 @font-face {
     font-family: open24;
@@ -20,87 +24,133 @@
     /*src: url(/fuentes/Open\ 24\ Display\ St.ttf);*/
 }
 
+/* Definimos los colores como variables con lo que sería más fácil en el futuro cambiar un color (pues se cambia en un solo sitio) y 
+en el código queda también más claro el color usado ya que ponemos su nombre.
+Recordemos que las variables deben comenzar por -- y no tene espacios o algunos símbolos especiales, diferenciándose mayúsculas de minúsculas.
+El valor asignado a una propiedad puede ser cualquier valor que podríamos asignar a una propiedad CSS  */
+:root {
+    --colorTitulos: #66fcf1;
+    --colorResaltado: rgb(124, 229, 124);
+    /* Podemos crear una variable a partir de otra variable */
+    --sombra: 2px 2px 8px var(--colorResaltado), -2px -2px 8px var(--colorResaltado);
+    --colorTextoPie: #888;
+    --colorEnlacesPie: white;
+    --colorFondo: #1f2833;
+}
+
 body {
     background-color: black;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 1200px; /* Para que la página no sea muy ancha
-                en monitores horizontales de mucha resolución*/
-    margin: auto; /* La centramos a partir de 1200px */
+    /* Para que la página no sea muy ancha en monitores horizontales de mucha resolución (1200 u otro valor que prefiramos).
+    También podemos aplicar este ancho máximo a elementos en lugar del body si queremos que el encabezado, pié, ... ocupen todo el ancho */
+    max-width: 1200px; 
+    margin: auto; /* La centramos horizontalmente. Recordemos que basta con marginr-left y margin-right a auto */
 }
 
+/************ Encabezado ***************/
+
 header {
-    background-color: #1f2833;
+    background-color: var(--colorFondo);
+    padding-bottom: .5rem; /* QUremos un poco de espacio entre el borde de lso enlaces y en final del encabezado */
 }
+
 header h1 {
-    color: #66fcf1;
+    color: var(--colorTitulos);
     /* Para hacer la letra responsiva:
     - vw: es un porcentaje del ancho del viewport (zona disponible)
-    - le sumamos los rem para no tener problemas de accesibilidad */
-    font-size: calc(1rem + 4vw);
-    text-align: center;
-    text-shadow: 2px 2px 8px rgb(124, 229, 124), -2px -2px 8px rgb(124, 229, 124);
+    - le sumamos los rem para no tener problemas de accesibilidad Ya que 4vw en un móvil puede ser muy pequeño.
+    En otros casos, puede ser conveniente indicar un mínimo y/o máximo para que no crezca o empequeñezca demasiado */
+    font-size: calc(4vw);
+    text-align: center; 
+    text-shadow: var(--sombra);
     font-family: homepage, sans-serif;
     /* Mientras no cargue la fuente que muestre una del sistema */
     font-display: swap;
 }
+
 header nav {
+    /* Para colocar los menús separados y del mismo tamaño, una opción es usar flex o grid, entre otras. Aquí optamos por Grid */
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    text-align: center;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas que ocupen todas el mismo espacio sobrante (1fr) */
+    text-align: center; /* En este ejercicio, esta es la manera más sencilla de centrar los enlaces dentro de su columna */
     gap: 2rem; /* Separación entre filas y entre columnas */
 }
+
 header nav a {
-    color: #66fcf1;
-    border-bottom: 4px solid #66fcf1;
+    color: var(--colorTitulos);
+    border-bottom: 4px solid var(--colorTitulos);
     padding-bottom: .5rem; /* Para que no quede tan pegado el borde */
 }
-header nav a:hover {
-    color: rgb(124, 229, 124);
-    border-color: rgb(124, 229, 124);
-    text-shadow: 2px 2px 8px rgb(124, 229, 124), -2px -2px 8px rgb(124, 229, 124);
+
+header nav a:hover { /* CUando pase el ratón por encima de un enlace */
+    color: var(--colorResaltado);
+    border-color: var(--colorResaltado);
+    text-shadow: var(--sombra);
 }
+
+/************ Píe ***************/
 footer {
     border-top: 1px solid #333;
     margin-top: 2rem;
+    /* La manera más sencilla de poner una parte a la izuqierda y otra a la derecha es flex con space-between */
     display: flex;
     justify-content: space-between;
     padding: 1rem;
+    /* El color y tamaño, entre otros, también afecta a los iconos pues son también letras, aunque algunos iconos de otros
+    podrían no dejar cambiar el color o solo uno de lso colores. No es el caso. */
     font-size: .8rem;
-    color: #888;
+    color: var(--colorTextoPie);
 }
+
 footer a {
-    color: white;
+    color: var(--colorEnlacesPie);
 }
+
 .atribucion a {
+    /* Como quitamos el subrayado en CSS Reset, ahora lo añadimos */
     text-decoration: underline;
 }
+
 .redes a {
     margin-right: 2rem;
 }
+
+
+/************ Fotos ***************/
+
 .foto {
     display: flex;
-    gap: 40px;
+    gap: 40px; /* Espacio entre las filas y columnas */
     margin-bottom: 20px;
     margin-top: 20px;
+    padding: 1rem;
 }
 .foto img {
+    /* Le damos un ancho máximo para que no sea demasiado grande la foto */
     max-width: 30%;
+    /* Queremos que cada foto esté dentro de un octógono. Para ello podemos usar la propiedad cilp-path que nos permite crear áreas de recorte
+    de muchos tipos. Para crearlas lo mejor es acudbir a páginas como https://bennettfeely.com/clippy/
+    Anteriormente se llamaba a esta propiedad clip */
     clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-    /* Sin esto la imagen puede crecer mucho del alto con lo que queda deformada,
-    pues flex por defecto usa stretch para que todas las columnas tengan el mismo
-    alto */
-    align-self: center;
+    /* Si empequeñecemos la pantalla mucho y el texto crece de alto más que la foto, está quedará deformada,
+    pues flex por defecto usa stretch para que todas las columnas tengan el mismo, lo que hace que la foto se alargue. Una solución sería
+    colocar la imagen dentro de un div, con lo que lo que se alargaría seróia el div, no la foto. Otra opción es usar align-self con center, flex-start,...
+    Si usamos flex-start, en este caso, podríamos hacerlo en la propiedad align-items de .foto, ya que no afectaría al texto */
+    align-self: flex-start;
 }
 
+/* Las fotos imapres (odd) en otro color de fondo. even para las pares */
 .foto:nth-of-type(odd) {
-    background-color: #1f2833;
+    /* Para usar la variable --colorFondo pero algo cambiada, podemos usar la función color-mix. En este caso le damos
+    algo de transparencia al color */
+    background-color: color-mix(in srgb, var(--colorFondo) 70%, transparent);
 }
 
 .foto h2 {
-    color: #66fcf1;
+    color: var(--colorTitulos);
     font-family: homepage, sans-serif;
     font-size: calc(1rem + 1vw);
-    border-bottom: 2px solid #66fcf1;
+    border-bottom: 2px solid var(--colorTitulos);
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: .4rem 1rem;
